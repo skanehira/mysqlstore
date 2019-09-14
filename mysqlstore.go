@@ -276,7 +276,7 @@ func (m *MySQLStore) load(session *sessions.Session) error {
 	}
 	if sess.expiresOn.Sub(time.Now()) < 0 {
 		log.Printf("Session expired on %s, but it is %s now.", sess.expiresOn, time.Now())
-		return errors.New("Session expired")
+		return errors.New("mysqlstore: Session expired")
 	}
 	err := securecookie.DecodeMulti(session.Name(), sess.data, &session.Values, m.Codecs...)
 	if err != nil {
