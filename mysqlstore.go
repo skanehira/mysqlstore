@@ -46,6 +46,9 @@ func init() {
 }
 
 func NewMySQLStore(endpoint string, tableName string, path string, maxAge int, keyPairs ...[]byte) (*MySQLStore, error) {
+	if len(keyPairs) == 0 {
+		return nil, errors.New("mysqlstore: No keyPairs")
+	}
 	db, err := sql.Open("mysql", endpoint)
 	if err != nil {
 		return nil, err
@@ -55,6 +58,9 @@ func NewMySQLStore(endpoint string, tableName string, path string, maxAge int, k
 }
 
 func NewMySQLStoreFromConnection(db *sql.DB, tableName string, path string, maxAge int, keyPairs ...[]byte) (*MySQLStore, error) {
+	if len(keyPairs) == 0 {
+		return nil, errors.New("mysqlstore: No keyPairs")
+	}
 	// Make sure table name is enclosed.
 	tableName = "`" + strings.Trim(tableName, "`") + "`"
 
